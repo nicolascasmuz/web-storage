@@ -27,7 +27,7 @@ export const state = {
   },
   addTask(title) {
     const currentState = this.getState();
-    currentState.tasks.push({ title, completed: false });
+    currentState.tasks.push({ title });
     this.setState(currentState);
   },
 };

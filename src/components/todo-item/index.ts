@@ -6,15 +6,12 @@ customElements.define(
   class extends HTMLElement {
     shadow: ShadowRoot;
     title: string;
-    checked: boolean = false;
+    /* checked: boolean = false; */
     deleted: boolean = false;
     constructor() {
       super();
       this.shadow = this.attachShadow({ mode: "open" });
       this.render();
-      state.subscribe(() => {
-        this.addListeners();
-      });
       this.addListeners();
     }
     render() {
@@ -22,9 +19,7 @@ customElements.define(
       this.shadow.innerHTML = `
       <div class="root">
           <h4 class="card__title">${this.title}</h4>
-          <input class="card__input" type="checkbox" ${
-            this.checked ? "checked" : ""
-          } />
+          <input class="card__input" type="checkbox" />
           <img class="card__img" src="${binIcon}" />
       </div>
       `;
@@ -32,7 +27,7 @@ customElements.define(
     connectedCallback() {
       // SE OBTIENEN Y COMPRUEBAN ATRIBUTOS
       this.title = this.getAttribute("title") || "";
-      this.checked = this.hasAttribute("checked");
+      /* this.checked = this.hasAttribute("checked"); */
       this.deleted = this.hasAttribute("deleted");
 
       // SE DA ESTILO AL ELEMENTO
@@ -87,20 +82,11 @@ customElements.define(
         }
       });
 
-      // ELIMINA EL ELEMENTO
+      // ELIMINA EL ELEMENTO Y RESETEA EL STATE
       const binIconEl = this.shadow.querySelector(".card__img") as HTMLElement;
       binIconEl.addEventListener("click", () => {
         this.setAttribute("deleted", "true");
         this.remove();
-
-        const deletedEl = {
-          title: this.title,
-          checked: this.checked,
-          deleted: this.deleted,
-        };
-
-        const currentState = state.getState();
-        currentState.tasks.push(deletedEl);
       });
     }
   }

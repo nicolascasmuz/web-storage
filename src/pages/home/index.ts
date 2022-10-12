@@ -16,8 +16,8 @@ export function initHomepage(containerEl) {
     const itemListHTML = items
       .map(
         (t) =>
-          `<my-todo-list title="${t.title}" ${t.completed ? "checked" : ""} ${
-            t.deleted ? "true" : ""
+          `<my-todo-list title="${t.title}" ${
+            t.deleted ? "deleted" : ""
           }></my-todo-list>`
       )
       .join("");
