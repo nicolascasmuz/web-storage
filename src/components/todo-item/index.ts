@@ -6,8 +6,6 @@ customElements.define(
   class extends HTMLElement {
     shadow: ShadowRoot;
     title: string;
-    /* checked: boolean = false; */
-    deleted: boolean = false;
     constructor() {
       super();
       this.shadow = this.attachShadow({ mode: "open" });
@@ -27,8 +25,7 @@ customElements.define(
     connectedCallback() {
       // SE OBTIENEN Y COMPRUEBAN ATRIBUTOS
       this.title = this.getAttribute("title") || "";
-      /* this.checked = this.hasAttribute("checked"); */
-      this.deleted = this.hasAttribute("deleted");
+      this.id = this.getAttribute("id") || "";
 
       // SE DA ESTILO AL ELEMENTO
       const style = document.createElement("style");
@@ -85,7 +82,7 @@ customElements.define(
       // ELIMINA EL ELEMENTO Y RESETEA EL STATE
       const binIconEl = this.shadow.querySelector(".card__img") as HTMLElement;
       binIconEl.addEventListener("click", () => {
-        this.setAttribute("deleted", "true");
+        state.deleteTask(parseInt(this.id));
         this.remove();
       });
     }

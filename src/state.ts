@@ -1,13 +1,13 @@
 export const state = {
   data: {
+    idCounter: 0,
     tasks: [],
   },
   listeners: [],
-  /* init() {
+  init() {
     const localData: any = localStorage.getItem("saved-state");
     this.setState(JSON.parse(localData));
-    localStorage.clear();
-  }, */
+  },
   getState() {
     return this.data;
   },
@@ -16,7 +16,7 @@ export const state = {
     for (const cb of this.listeners) {
       cb(newState);
     }
-    /* localStorage.setItem("saved-state", JSON.stringify(newState)); */
+    localStorage.setItem("saved-state", JSON.stringify(newState));
   },
   subscribe(callback: (any) => any) {
     this.listeners.push(callback);
@@ -27,7 +27,16 @@ export const state = {
   },
   addTask(title) {
     const currentState = this.getState();
-    currentState.tasks.push({ title });
+    currentState.tasks.push({ title, id: currentState.idCounter });
+    currentState.idCounter = currentState.idCounter + 1;
+    this.setState(currentState);
+  },
+  deleteTask(id: number) {
+    const currentState = this.getState();
+    const notDeletedTasks = currentState.tasks.filter((task) => {
+      return task.id != id ? task : null;
+    });
+    currentState.tasks = notDeletedTasks;
     this.setState(currentState);
   },
 };

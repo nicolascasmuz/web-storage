@@ -15,10 +15,7 @@ export function initHomepage(containerEl) {
   function createTasks(items) {
     const itemListHTML = items
       .map(
-        (t) =>
-          `<my-todo-list title="${t.title}" ${
-            t.deleted ? "deleted" : ""
-          }></my-todo-list>`
+        (t) => `<my-todo-list title="${t.title}" id="${t.id}"></my-todo-list>`
       )
       .join("");
 
@@ -27,6 +24,11 @@ export function initHomepage(containerEl) {
 
   state.subscribe(() => {
     createTasks(state.getEnabledTasks());
+  });
+
+  window.addEventListener("load", () => {
+    const localData: any = localStorage.getItem("saved-state");
+    createTasks(JSON.parse(localData).tasks);
   });
 
   containerEl.appendChild(div);
