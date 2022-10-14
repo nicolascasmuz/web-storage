@@ -21,13 +21,13 @@ export const state = {
   subscribe(callback: (any) => any) {
     this.listeners.push(callback);
   },
-  getEnabledTasks() {
+  getTasks() {
     const currentState = this.getState();
-    return currentState.tasks.filter((t) => !t.deleted);
+    return currentState.tasks;
   },
   addTask(title) {
     const currentState = this.getState();
-    currentState.tasks.push({ title, id: currentState.idCounter });
+    currentState.tasks.push({ title: title, id: currentState.idCounter });
     currentState.idCounter = currentState.idCounter + 1;
     this.setState(currentState);
   },

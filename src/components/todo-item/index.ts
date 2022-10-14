@@ -23,7 +23,7 @@ customElements.define(
       `;
     }
     connectedCallback() {
-      // SE OBTIENEN Y COMPRUEBAN ATRIBUTOS
+      // SE OBTIENEN LOS ATRIBUTOS
       this.title = this.getAttribute("title") || "";
       this.id = this.getAttribute("id") || "";
 
